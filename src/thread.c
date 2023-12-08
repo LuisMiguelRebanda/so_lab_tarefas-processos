@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <pthread.h>
+#include <unistd.h>
 
 /* global value */
 int g_value = 0;
@@ -14,12 +15,15 @@ void* thr_func(void *p) {
 }
 
 int main() {
+
     pthread_t tid;
+
     if (pthread_create(&tid, NULL, thr_func, NULL) != 0) {
         fprintf(stderr, "error creating thread.\n");
         return -1;
     }
     
+    sleep(2);
     g_value = 2;
     
     if(pthread_join(tid, NULL) != 0) {
